@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>
+		<title>Contestron</title>
+
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+
+		<link rel="stylesheet" type="text/css" href="../css/mockup.css">
+
+		<link rel="shortcut icon" href="../imgs/favicon.ico">
+	</head>
+
+	<body>
+		<div id="content">
+
+			<header>
+				<a href="../">
+					<img src="../imgs/logo.png" class="left" alt="hf logo" width="96" height="96">
+				</a>
+				<span class="page-title">
+					<a href="../blog/index.html">blogfoolery</a>
+				</span>
+			</header>
+
+			<hr>
+
+			<section>
+
+	<h1 class="headline">Contestron</h1>
+	<span class="meta">February 26, 2012</span>
+	
+	<article>
+		<blockquote>
+<p><em>“Contestron is alive. Contestron is watching. Contestron desires your correct and intelligent solutions.”</em><br> - Contestron: Helpful Information</p>
+</blockquote>
+<p>Every semester, IU Bloomington’s <a href="http://cs.indiana.edu/classes/c211">Introduction to Computer Science</a> holds a programming contest for all of the students taking the course. It consists of eight problems released one-by-one as the time limit (usually fifteen to twenty-five minutes) for the previous problem expires. All of the answers are written in Chez Scheme, the language of choice for the course.</p>
+<p>The last problem for the Spring 2012 contest just expired a few hours ago, with my solution arriving with only a half a minute to spare. I had never done any programming contests before, but this seemed like the perfect time to start.</p>
+<hr></hr>
+<p>I eagerly awaited the contest the entire week leading up to it, determined to win. Not only did I want to go head-to-head with my classmates, but I also had it from a reliable source on the school’s IRC channel that doing well would give me a leg up when I applied to become an undergraduate instructor for the course.</p>
+<p>Luckily for me, I had chosen the lab section instructed by the senior CS student who had created the Contestron platform that served the problems and evaluated solutions for correctness. I took full advantage of this and made sure to ask him about what sorts of problems could be expected and which course-specific libraries we might be using in the contest. Not that Suzanne, our professor, had not described the problems we might be seeing; it just seemed a waste to pass up on an opportunity to find out more.</p>
+<p>I awoke this morning a few minutes before my alarm—a recent habit I seem to have developed since moving to Bloomington in early January. Not willing to wait for the contest to begin, I immediately began working on other coding projects of my own until hunger finally forced me to get dressed and hunt down some breakfast. Needless to say, I was just a bit excited about Contestron.</p>
+<p>One of my friends from high school who is also taking the course invited me to join him at a local coffee shop where he intended to take on Contestron with his laptop. While preparing mine for the contest back in my room, however, I found that the wireless drivers were acting up again and realized that I could not trust them to maintain a steady or even tenuous connection while submitting solutions on the contest’s site. This was probably for the best though; I much prefer working on my desktop with a full size keyboard and my custom XMonad setup.</p>
+<p>About an hour before the contest began, I was refreshing the course website every five minutes looking for a post about where to find the contest. When the post arrived, I still had to wait another forty-five minutes first problem was released. After nervously flicking between various projects and time-killing websites, Contestron finally began with the first problem: a fifteen minute exercise in recursion over multiple lists.</p>
+<p>According to my git logs, I finished the first exercise in about five minutes and then spent the remainder of the problem’s alloted time creating boilerplate comments for seven more problems. The second problem held a surprise: it came with an additional challenge problem which, while without impact on our standings in the contest, was irresistible. It seems that this challenge got the best of me, however; I committed the files for the second problem with a note that “2c is not quite right…”</p>
+<p>As the third problem was released, I checked my record so far. My tests seemed to be all too correct; I had indeed missed the challenge. Luckily for my score, I had passed the others and thus had a perfect score on the problems that counted.</p>
+<p>Problem three also came with a twist: it contained multiple parts and this time, none were optional. Similarly to its predecessors, it hinged on an understanding of recursion and lists while also testing the more recent course theme of modularity and encapsulation; the first part was meant as a sub-problem of the second.</p>
+<p>It was at this point that my commits began slipping; the logs would not see another entry until the third through sixth problems were all committed at once. I certainly was no longer finishing in half of the time for each problem. In the midst of the growing stress, however, I received a text from my friend holed up in the coffee shop:</p>
+<blockquote>
+<p>Did you see we were the two featured answers for problem 1?</p>
+</blockquote>
+<p>I had been wondering why the blank space for sample solutions was not being filled immediately after a problem had closed. Apparently the professor and/or some TAs were going over our submitted solutions as soon as they were graded by Contestron and using that space for showcasing their favorites. This definitely seemed like good news for my future job prospects within the department.</p>
+<p>The fourth problem was particularly memorable. While lacking any explicit mention of lists or recursion, it required us to compute the least common multiple of all the whole numbers up to a given number <code>n</code>. While it would have been fairly simple to brute-force the problem and test all the numbers greater than <code>n</code> until I found one divisible by all those from 1 to <code>n</code>, we were being graded on both our correctness <em>and</em> our style, so this did not seem to be appropriate.</p>
+<p>Luckily for me, I have been studying <em>Real World Haskell</em> since I got it from my grandparents this past Christmas (thanks again!) and it has recently introduced me to the concept of using lists with built-in and proven concepts of recursion such as <code>map</code> and the various folds instead of hand-rolling an iterative function of my own which passes some sort of counter to each successive call. As it happened, these concepts worked beautifully in Scheme, which has its own <code>fold-right</code> function in addition to an extremely handy built-in for computing least common multiples, <code>lcm</code>.</p>
+<table class="sourceCode scheme numberLines" startFrom="1"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+</pre></td><td class="sourceCode"><pre><code class="sourceCode scheme">(<span class="kw">define</span><span class="fu"> prob4</span>
+  (<span class="kw">lambda</span> (n)
+    (fold-right <span class="kw">lcm</span> <span class="dv">1</span> (range n))))</code></pre></td></tr></table>
+<p>While I was unable to quickly find a function that would produce a list of the whole numbers up to <code>n</code> (I definitely missed Haskell’s curt <code>[1..n]</code> here) it was quick and simple to make my own <code>range</code> to substitute.</p>
+<p>Four problems and two additional challenges later, each more difficult than the last, and I finished a twenty minute, two part exercise in barely enough time to calm down and go through the menus to upload my solution. I knew immediately that I had solved six of the eight graded problems correctly (and only one of the three challenges, unfortunately,) but it would be some time before the TAs could manually grade our style and announce the top three contestants. At this point, only the first four problems had revealed their featured solutions, so I took the time to lie down and calm my nerves. An hour later and the eighth problem and the challenge for the seventh still lacked their featured solutions—although I had also been featured in my solution for the sixth, an exercise in efficient and tail-recursive modular exponentiation.</p>
+<p>Finally, after catching up on my backlog of articles I had emailed to my Kindle (my other awesome Christmas present, thanks Mom and Dad!) the top three places were announced: I had come in third.</p>
+<p>While it was not the first place—or <em>Supreme Schemer</em>, as Suzanne enthusiastically calls it—I was quite happy with the results when I remembered that I had failed to solve two of the required problems before they expired. In the end, I learned that my hands sweat profusely while coding under stress and that I can maintain an adrenaline rush for a solid 150 minutes. I also learned that I should try and calm all of that adrenaline down next time, as all of my incorrect solutions failed tests due to trivial mistakes which I would have noticed easily had I been merely working on a homework assignment.</p>
+<p>Most importantly, I learned that I definitely want to do more contests in the future. Now I can hardly wait until all of us in the CS club can decide what we want to do for our own contest this semester.</p>
+
+		<!-- Insert a call to action here for similar posts, rss feed, and twitter -->
+	</article>
+
+	<span class="meta">tags: <a href="../tags/iu.html">iu</a>, <a href="../tags/c211.html">c211</a>, <a href="../tags/scheme.html">scheme</a></span>
+</section>
+
+
+			<hr>
+
+			<footer>
+				<nav class="left"><a href="../">Home</a> | <a href="../blog/index.html">Blog</a> | <a href="../rss.xml"><img src="../imgs/rss.png" class="nav-icon"></a>  <a href="https://twitter.com/mjdwitt"><img src="../imgs/twitter.png" class="nav-icon"></a>  <a href="https://github.com/mjdwitt"><img src="../imgs/github-icon.png" class="nav-icon"></a></nav>
+
+				<span class="right">Powered by <a href="http://jaspervdj.be/hakyll">Hakyll</a></span>
+			</footer>
+
+		</div>
+	</body>
+</html>
