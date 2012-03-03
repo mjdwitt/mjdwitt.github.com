@@ -45,28 +45,23 @@
 </div>
 <p>In this case, <code>openssl-compatibility</code> is listed as a dependency and is an AUR package, so we’ll install it now. Follow the link there to its AUR page and download the tarball. (Save it in the directory that you put the utorrent-server tarball in when you downloaded it earlier.) This package has no dependencies, so we can go ahead with building and installing it.</p>
 <p>In a terminal, move to the directory where you saved the tarball and unpack it with</p>
-<pre><code>$ tar xzf openssl-compatibility.tar.gz
-</code></pre>
+<pre><code>$ tar xzf openssl-compatibility.tar.gz</code></pre>
 <p>In the above call to the <code>tar</code> utility, we pass it three options. <code>x</code> tells it that we are extracting something (as opposed to creating a tarball with <code>c</code>), <code>z</code> tells it to run the tarball through the <code>gunzip</code> command, which is required since this file is a gzipped file, and <code>f</code> tells it that the next argument following is the file to operate on.</p>
 <p>When that is done, you will have a new directory named <code>openssl-compatibility</code>. Move into it and run</p>
-<pre><code>$ makepkg -ic
-</code></pre>
+<pre><code>$ makepkg -ic</code></pre>
 <p>This command uses the PKGBUILD file in the current directory to download and build <code>openssl-compatibility</code> from its source files. In this case, we called it with two options following a single hyphen. <code>i</code> tells it to use <code>pacman -U</code> to install the local package file created by <code>makepkg</code>. This will prompt for the password for <code>sudo</code> and normal input for any installation with pacman. The second option passed to <code>makepkg</code>, <code>c</code>, tells it to remove unecessary source files after it is done building and installing the package. It will, however, keep the actual package file that was created in case you need to reinstall sometime.</p>
 <p>(You may have noticed that when we passed options to <code>makepkg</code>, they had a hyphen in front of them, but for <code>tar</code> we left off the hyphen. <code>tar</code> is strange in that it, unlike most *nix utilities, doesn’t require a hyphen in front of its options if they are immediately after the call to tar, like the are above. You can include the hyphen like in <code>makepkg</code> and it will behave the same, but it is unecessary. It <em>must</em> be there for <code>makepkg</code> though.)</p>
 <h2 id="the-actual-installation">The actual installation</h2>
 <p>After this is done, the only remaining dependencies for utorrent-server should all be available in pacman repositories, so we can move back up a folder (<code>cd ..</code>) to where the utorrent-server tarball was saved. Unpack it</p>
-<pre><code>$ tar xzf utorrent-server.tar.gz
-</code></pre>
+<pre><code>$ tar xzf utorrent-server.tar.gz</code></pre>
 <p>and move into the directory that creates (<code>cd utorrent-server</code>). Here, run</p>
-<pre><code>$ makepkg -sic
-</code></pre>
+<pre><code>$ makepkg -sic</code></pre>
 <p>Note that a new option was used this time that was not used for openssl-compatibility. <code>s</code> tells <code>makepkg</code> to attempt to install all of the dependencies listed in the PKGBUILD required for installation and for building the package. If this were not used and some of the dependencies were not installed, <code>makepkge</code> would return an error and fail to build or install the package.</p>
 <h1 id="running-utorrent-server">Running utorrent-server</h1>
 <p>If you paid attention to the output of the last call to <code>makepkg</code> when we installed utorrent-server, it gave some short instructions for running the server. Namely, run</p>
-<pre><code># /etc/rc.d/utorrent-server start
-</code></pre>
+<pre><code># /etc/rc.d/utorrent-server start</code></pre>
 <p>This starts the daemon that runs the server in the background. If you want to stop or restart the server, run the same command, replacing start with stop or restart. (Since this is a daemon in Arch, you could also use <code>rc.d &lt;command&gt; utorrent-server</code> to start, stop, or restart the server. The two formats are equivalent.)</p>
-<p>To actually use utorrent-server, you can open up a (javascript-enabled) browser and point it at <code>localhost:8080/gui</code> and be greated by a fairly familiar, if a bit laggy, interface to your favorite BitTorrent client from your Windows (or Mac) days. The rest should be pretty self-explanatory now that you have a gui. You can tweak settings, add torrents, and more from this interface and since it’s familiar, you should be downloading <span style="text-decoration: line-through;">movies</span> Linux ISOs in no time.</p>
+<p>To actually use utorrent-server, you can open up a (javascript-enabled) browser and point it at <code>localhost:8080/gui</code> and be greated by a fairly familiar, if a bit laggy, interface to your favorite BitTorrent client from your Windows (or Mac) days. The rest should be pretty self-explanatory now that you have a gui. You can tweak settings, add torrents, and more from this interface and since it’s familiar, you should be downloading <del>movies</del> Linux ISOs in no time.</p>
 <div class="figure">
 <img src="../imgs/utorrent-server-webgui.png"></img><p class="caption"></p>
 </div>

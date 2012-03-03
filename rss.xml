@@ -57,28 +57,23 @@
 </div>
 <p>In this case, <code>openssl-compatibility</code> is listed as a dependency and is an AUR package, so we’ll install it now. Follow the link there to its AUR page and download the tarball. (Save it in the directory that you put the utorrent-server tarball in when you downloaded it earlier.) This package has no dependencies, so we can go ahead with building and installing it.</p>
 <p>In a terminal, move to the directory where you saved the tarball and unpack it with</p>
-<pre><code>$ tar xzf openssl-compatibility.tar.gz
-</code></pre>
+<pre><code>$ tar xzf openssl-compatibility.tar.gz</code></pre>
 <p>In the above call to the <code>tar</code> utility, we pass it three options. <code>x</code> tells it that we are extracting something (as opposed to creating a tarball with <code>c</code>), <code>z</code> tells it to run the tarball through the <code>gunzip</code> command, which is required since this file is a gzipped file, and <code>f</code> tells it that the next argument following is the file to operate on.</p>
 <p>When that is done, you will have a new directory named <code>openssl-compatibility</code>. Move into it and run</p>
-<pre><code>$ makepkg -ic
-</code></pre>
+<pre><code>$ makepkg -ic</code></pre>
 <p>This command uses the PKGBUILD file in the current directory to download and build <code>openssl-compatibility</code> from its source files. In this case, we called it with two options following a single hyphen. <code>i</code> tells it to use <code>pacman -U</code> to install the local package file created by <code>makepkg</code>. This will prompt for the password for <code>sudo</code> and normal input for any installation with pacman. The second option passed to <code>makepkg</code>, <code>c</code>, tells it to remove unecessary source files after it is done building and installing the package. It will, however, keep the actual package file that was created in case you need to reinstall sometime.</p>
 <p>(You may have noticed that when we passed options to <code>makepkg</code>, they had a hyphen in front of them, but for <code>tar</code> we left off the hyphen. <code>tar</code> is strange in that it, unlike most *nix utilities, doesn’t require a hyphen in front of its options if they are immediately after the call to tar, like the are above. You can include the hyphen like in <code>makepkg</code> and it will behave the same, but it is unecessary. It <em>must</em> be there for <code>makepkg</code> though.)</p>
 <h2 id="the-actual-installation">The actual installation</h2>
 <p>After this is done, the only remaining dependencies for utorrent-server should all be available in pacman repositories, so we can move back up a folder (<code>cd ..</code>) to where the utorrent-server tarball was saved. Unpack it</p>
-<pre><code>$ tar xzf utorrent-server.tar.gz
-</code></pre>
+<pre><code>$ tar xzf utorrent-server.tar.gz</code></pre>
 <p>and move into the directory that creates (<code>cd utorrent-server</code>). Here, run</p>
-<pre><code>$ makepkg -sic
-</code></pre>
+<pre><code>$ makepkg -sic</code></pre>
 <p>Note that a new option was used this time that was not used for openssl-compatibility. <code>s</code> tells <code>makepkg</code> to attempt to install all of the dependencies listed in the PKGBUILD required for installation and for building the package. If this were not used and some of the dependencies were not installed, <code>makepkge</code> would return an error and fail to build or install the package.</p>
 <h1 id="running-utorrent-server">Running utorrent-server</h1>
 <p>If you paid attention to the output of the last call to <code>makepkg</code> when we installed utorrent-server, it gave some short instructions for running the server. Namely, run</p>
-<pre><code># /etc/rc.d/utorrent-server start
-</code></pre>
+<pre><code># /etc/rc.d/utorrent-server start</code></pre>
 <p>This starts the daemon that runs the server in the background. If you want to stop or restart the server, run the same command, replacing start with stop or restart. (Since this is a daemon in Arch, you could also use <code>rc.d &lt;command&gt; utorrent-server</code> to start, stop, or restart the server. The two formats are equivalent.)</p>
-<p>To actually use utorrent-server, you can open up a (javascript-enabled) browser and point it at <code>localhost:8080/gui</code> and be greated by a fairly familiar, if a bit laggy, interface to your favorite BitTorrent client from your Windows (or Mac) days. The rest should be pretty self-explanatory now that you have a gui. You can tweak settings, add torrents, and more from this interface and since it’s familiar, you should be downloading <span style="text-decoration: line-through;">movies</span> Linux ISOs in no time.</p>
+<p>To actually use utorrent-server, you can open up a (javascript-enabled) browser and point it at <code>localhost:8080/gui</code> and be greated by a fairly familiar, if a bit laggy, interface to your favorite BitTorrent client from your Windows (or Mac) days. The rest should be pretty self-explanatory now that you have a gui. You can tweak settings, add torrents, and more from this interface and since it’s familiar, you should be downloading <del>movies</del> Linux ISOs in no time.</p>
 <div class="figure">
 <img src="../imgs/utorrent-server-webgui.png"></img><p class="caption"></p>
 </div>
@@ -161,7 +156,12 @@
 <p>I had been wondering why the blank space for sample solutions was not being filled immediately after a problem had closed. Apparently the professor and/or some TAs were going over our submitted solutions as soon as they were graded by Contestron and using that space for showcasing their favorites. This definitely seemed like good news for my future job prospects within the department.</p>
 <p>The fourth problem was particularly memorable. While lacking any explicit mention of lists or recursion, it required us to compute the least common multiple of all the whole numbers up to a given number <code>n</code>. While it would have been fairly simple to brute-force the problem and test all the numbers greater than <code>n</code> until I found one divisible by all those from 1 to <code>n</code>, we were being graded on both our correctness <em>and</em> our style, so this did not seem to be appropriate.</p>
 <p>Luckily for me, I have been studying <em>Real World Haskell</em> since I got it from my grandparents this past Christmas (thanks again!) and it has recently introduced me to the concept of using lists with built-in and proven concepts of recursion such as <code>map</code> and the various folds instead of hand-rolling an iterative function of my own which passes some sort of counter to each successive call. As it happened, these concepts worked beautifully in Scheme, which has its own <code>fold-right</code> function in addition to an extremely handy built-in for computing least common multiples, <code>lcm</code>.</p>
-<p><code>{.scheme .numberLines startFrom=&quot;1&quot;} (define prob4   (lambda (n)     (fold-right lcm 1 (range n))))</code></p>
+<table class="sourceCode scheme numberLines" startFrom="1"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+</pre></td><td class="sourceCode"><pre><code class="sourceCode scheme">(<span class="kw">define</span><span class="fu"> prob4</span>
+  (<span class="kw">lambda</span> (n)
+    (fold-right <span class="kw">lcm</span> <span class="dv">1</span> (range n))))</code></pre></td></tr></table>
 <p>While I was unable to quickly find a function that would produce a list of the whole numbers up to <code>n</code> (I definitely missed Haskell’s curt <code>[1..n]</code> here) it was quick and simple to make my own <code>range</code> to substitute.</p>
 <p>Four problems and two additional challenges later, each more difficult than the last, and I finished a twenty minute, two part exercise in barely enough time to calm down and go through the menus to upload my solution. I knew immediately that I had solved six of the eight graded problems correctly (and only one of the three challenges, unfortunately,) but it would be some time before the TAs could manually grade our style and announce the top three contestants. At this point, only the first four problems had revealed their featured solutions, so I took the time to lie down and calm my nerves. An hour later and the eighth problem and the challenge for the seventh still lacked their featured solutions—although I had also been featured in my solution for the sixth, an exercise in efficient and tail-recursive modular exponentiation.</p>
 <p>Finally, after catching up on my backlog of articles I had emailed to my Kindle (my other awesome Christmas present, thanks Mom and Dad!) the top three places were announced: I had come in third.</p>
@@ -244,7 +244,7 @@
 	</body>
 </html>
 ]]></description>
-    <pubDate>$published$</pubDate>
+    <pubDate>No date found.</pubDate>
     <guid>http://hackfoolery.com$url$</guid>
 </item>
 
